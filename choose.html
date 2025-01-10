@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>选择地图</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        background-image: url('welcomeblack.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #carousel-container {
+        position: relative;
+        top: 5%;
+        width: 70%; /* Adjust based on your needs */
+        max-width: 1000px;
+        text-align: center;
+    }
+
+    #carousel-inner {
+        position: relative;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .carousel-item {
+        width: 100%;
+        display: none;
+    }
+
+    .carousel-item.active {
+        display: block;
+    }
+
+    /* 自定义左右按钮样式 */
+    #prevButton, #nextButton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 10;
+        background: no-repeat center/contain;
+        border: none;
+        outline: none;
+        width: 50px; /* 设置为您的图片宽度 */
+        height: 50px; /* 设置为您的图片高度 */
+    }
+
+    #prevButton {
+        left: -120px;
+        background-image: url('left-button.png'); /* 替换为您自己的左箭头图片路径 */
+    }
+
+    #nextButton {
+        right: -120px;
+        background-image: url('right-button.png'); /* 替换为您自己的右箭头图片路径 */
+    }
+
+    /* 选择按钮样式 */
+    #selectButton {
+        margin-top: -20px;
+        cursor: pointer;
+        background: no-repeat center/contain;
+        width: 200px; /* 设置为您的图片宽度 */
+        height: 200px; /* 设置为您的图片高度 */
+        border: none;
+        outline: none;
+    }
+</style>
+</head>
+<body>
+
+<div id="carousel-container">
+    <button id="prevButton"></button>
+    <div id="carousel-inner">
+        <img src="shijin.png" alt="Image 1" data-url="shijin.html" class="carousel-item active">
+        <img src="keji.png" alt="Image 2" data-url="https://executeting.github.io/Song/Technology.html" class="carousel-item">
+        <img src="yaji.png" alt="Image 3" data-url="https://yjg521.github.io/01/%E6%80%BB%E5%9B%BE.html" class="carousel-item">
+    </div>
+    <button id="nextButton"></button>
+    <button id="selectButton" style="background-image: url('tosearch.png');"></button>
+</div>
+
+<script>
+    const carouselInner = document.getElementById('carousel-inner');
+    const items = document.querySelectorAll('.carousel-item');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const selectButton = document.getElementById('selectButton');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        // Remove 'active' class from all items
+        items.forEach(item => item.classList.remove('active'));
+
+        // Add 'active' class to current item
+        items[currentIndex].classList.add('active');
+    }
+
+    function showNextItem() {
+        currentIndex = (currentIndex + 1) % items.length;
+        updateCarousel();
+    }
+
+    function showPrevItem() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel();
+    }
+
+    function goToPage() {
+        window.location.href = items[currentIndex].dataset.url;
+    }
+
+    // Event listeners for buttons
+    nextButton.addEventListener('click', showNextItem);
+    prevButton.addEventListener('click', showPrevItem);
+
+    // Event listener for the select button
+    selectButton.addEventListener('click', goToPage);
+
+    // Initial call to set the first slide as active
+    updateCarousel();
+</script>
+
+</body>
+</html>
